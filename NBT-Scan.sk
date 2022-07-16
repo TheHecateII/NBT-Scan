@@ -1,0 +1,38 @@
+#██╗  ██╗███████╗ ██████╗ █████╗ ████████╗███████╗
+#██║  ██║██╔════╝██╔════╝██╔══██╗╚══██╔══╝██╔════╝
+#███████║█████╗  ██║     ███████║   ██║   █████╗  
+#██╔══██║██╔══╝  ██║     ██╔══██║   ██║   ██╔══╝  
+#██║  ██║███████╗╚██████╗██║  ██║   ██║   ███████╗
+#╚═╝  ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝
+
+#Simple NBT Scan Skript 
+
+#Require SKBee -> https://github.com/ShaneBeee/SkBee/releases
+
+
+
+
+command /nbtscan:
+    trigger:
+        if player is op:   # if player has permission "exemple.perm"
+            if {scannbt.%UUID of player%} is not set:
+                set {scannbt.%UUID of player%} to true 
+            if {scannbt.%UUID of player%} = true:
+                set {scannbt.%UUID of player%} to false
+                send "&7[&cNBT&7] ➜ &7NBT Scan &c&lOFF" to player
+            else if {scannbt.%UUID of player%} = false:
+                set {scannbt.%UUID of player%} to true
+                send "&7[&cNBT&7] ➜ &7NBT Scan &a&lON" to player
+
+
+on right click:
+    if {scannbt.%UUID of player%} = true:
+        set {_nbt::*} to nbt of event-block
+        if {_nbt::*} is set:
+            send "%{_nbt::*}%" to player
+        send "&c&o%location of target block%" to player
+        send "&7Block ID ➜ &c%id of the clicked block%" to player # 1.12.2 < Only 
+
+
+
+    
